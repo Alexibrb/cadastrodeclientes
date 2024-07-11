@@ -23,19 +23,20 @@ df = read_data()
 st.markdown('# 💻 Cadastro de Clientes' )
 
 with st.container():
-    st.markdown('<h4 style="text-align: center; color: gray">⏬Escolha Uma Operação ⏬</h4>', unsafe_allow_html=True)
+    st.success('### ⏬ Escolha Uma Operação ⏬')
     option = st.selectbox('', ["Ler os Dados", "Criar Dados", "Atualizar Registro", "Deletar Registro"])
 
 if option == "Ler os Dados":
-    st.subheader("	📖 Leitura dos registros")
+    st.info("###	📖 Leitura dos registros")
     with st.container():
         # Exibir a tabela com estilo CSS inline
         df_reset = df.reset_index(drop=True)
         st.table(df_reset)
 
 elif option == "Criar Dados":
-    st.subheader("🆕Adicionar novo registro")
+    st.info("### 🆕Adicionar novo registro")
     with st.container():
+        cidade = st.selectbox("Cidade", ('Condeúba','Pres. Jânio Quadros','Maetinga', 'Cordeiros', 'Piripá', 'Mortugaba'))
         nome = st.text_input("Nome")
         telefone = st.text_input("Telefone")
         cpf = st.text_input("CPF")
@@ -44,10 +45,11 @@ elif option == "Criar Dados":
         endereco_residencial = st.text_input("Endereço Residencial")
         obs = st.text_input("Observação")
 
-    if st.button("Adicionar Registro", key='my_button', disabled=not (nome and telefone)):
+    if st.button("Adicionar Registro", key='my_button'):
         new_id = df['ID'].max() + 1 if not df.empty else 1
         new_row = pd.DataFrame({
             'ID': [new_id],
+            'Cidade': [cidade],
             'Nome': [nome],
             'Telefone': [telefone],
             'CPF': [cpf],
@@ -63,10 +65,11 @@ elif option == "Criar Dados":
 
 elif option == "Atualizar Registro":
 
-    st.subheader("♻️Atualizar um registro")
+    st.info("### ♻️Atualizar um registro")
     with st.container():
         record_id = st.number_input("ID do registro a ser atualizado", min_value=0, step=1)
         if record_id in df['ID'].values:
+            cidade = st.text_input("Cidade", value=df[df['ID'] == record_id]['Cidade'].values[0])
             nome = st.text_input("Nome", value=df[df['ID'] == record_id]['Nome'].values[0])
             telefone = st.text_input("Telefone", value=df[df['ID'] == record_id]['Telefone'].values[0])
             cpf = st.text_input("CPF", value=df[df['ID'] == record_id]['CPF'].values[0])
@@ -76,6 +79,7 @@ elif option == "Atualizar Registro":
             obs = st.text_area("Observação", value=df[df['ID'] == record_id]['Observação'].values[0])
 
             if st.button("Atualizar"):
+                df.loc[df['ID'] == record_id, 'Cidade'] = cidade
                 df.loc[df['ID'] == record_id, 'Nome'] = nome
                 df.loc[df['ID'] == record_id, 'Telefone'] = telefone
                 df.loc[df['ID'] == record_id, 'CPF'] = cpf
@@ -86,22 +90,26 @@ elif option == "Atualizar Registro":
                 write_data(df)
                 st.success("Registro atualizado com sucesso!")
         else:
-            st.warning("ID não encontrado!")
+            st.error("ID não encontrado!")
             with st.expander("Visualizar Registros"):
                 df_reset = df.reset_index(drop=True)
                 st.table(df_reset)
 
 elif option == "Deletar Registro":
-    st.subheader("🗑️Excluir um registro")
+    st.info("### 🗑️Excluir um registro")
     with st.container():
         record_id = st.number_input("ID do registro a ser excluído", min_value=0, step=1)
         if record_id in df['ID'].values:
+
             if st.button("Excluir"):
                 df = df[df['ID'] != record_id]
                 write_data(df)
                 st.success("Registro excluído com sucesso!")
+                st.experimental_rerun()
+            nome = st.text_input("Nome", value=df[df['ID'] == record_id]['Nome'].values[0])
+
         else:
-            st.warning("ID não encontrado!")
+            st.error("ID não encontrado!")
             with st.expander("Visualizar Registros"):
                 df_reset = df.reset_index(drop=True)
                 st.table(df_reset)
