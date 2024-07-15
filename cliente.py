@@ -10,15 +10,17 @@ with open("style.css") as f:
 
 
 # Funções auxiliares
+@st.cache_data
 def read_data():
     return pd.read_excel('database.xlsx')
 
-
+@st.cache_data
 def write_data(df):
     df.to_excel('database.xlsx', index=False)
 
 
 # Leitura dos dados
+
 df = read_data()
 st.markdown('# 💻 Cadastro de Clientes' )
 
