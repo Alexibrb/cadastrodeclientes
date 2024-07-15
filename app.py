@@ -37,26 +37,26 @@ elif option == "Criar Dados":
     st.info("### 🆕Adicionar novo registro")
     with st.container():
         cidade = st.selectbox("Cidade", ('Condeúba','Pres. Jânio Quadros','Maetinga', 'Cordeiros', 'Piripá', 'Mortugaba'))
-        nome = st.text_input("Nome")
+        nome = st.text_input("Nome Completo")
         telefone = st.text_input("Telefone")
         cpf = st.text_input("CPF")
         rg = st.text_input("RG")
-        endereco_obra = st.text_input("Endereço da obra")
-        endereco_residencial = st.text_input("Endereço Residencial")
+        endereco_obra = st.text_input("Endereço da obra (Completo)")
+        endereco_residencial = st.text_input("Endereço Residencial (Completo)")
         obs = st.text_input("Observação")
 
     if st.button("Adicionar Registro", key='my_button'):
         new_id = df['ID'].max() + 1 if not df.empty else 1
         new_row = pd.DataFrame({
-            'ID': [new_id],
-            'Cidade': [cidade],
-            'Nome': [nome],
-            'Telefone': [telefone],
-            'CPF': [cpf],
-            'RG': [rg],
-            'Endereço da obra': [endereco_obra],
-            'Endereço Residencial': [endereco_residencial],
-            'Observação': [obs]
+                'ID': [new_id],
+                'Cidade': [cidade],
+                'Nome Completo': [nome],
+                'Telefone': [telefone],
+                'CPF': [cpf],
+                'RG': [rg],
+                'Endereço da obra (Completo)': [endereco_obra],
+                'Endereço Residencial (Completo)': [endereco_residencial],
+                'Observação': [obs]
         })
         df = pd.concat([df, new_row], ignore_index=True)
         write_data(df)
