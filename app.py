@@ -5,7 +5,7 @@ import os
 
 st.set_page_config(page_title="Cadastro de Clientes", page_icon="💻", layout="wide", initial_sidebar_state="expanded")
 
-
+st.success("# Paulo Eiji Viana \n Engenheiro - CREABA 37645/D")
 with open("style.css") as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
@@ -34,7 +34,7 @@ if option == "Ler os Dados":
         # Exibir a tabela com estilo CSS inline
         df_reset = df.reset_index(drop=True)
         st.table(df_reset)
-        st.table(df)
+
 
 elif option == "Criar Dados":
     st.info("### 🆕Adicionar novo registro")
@@ -73,7 +73,7 @@ elif option == "Atualizar Registro":
         record_id = st.number_input("ID do registro a ser atualizado", min_value=0, step=1)
         if record_id in df['ID'].values:
             cidade = st.text_input("Cidade", value=df[df['ID'] == record_id]['Cidade'].values[0])
-            nome = st.text_input("Nome", value=df[df['ID'] == record_id]['Nome'].values[0])
+            nome = st.text_input("Nome Completo", value=df[df['ID'] == record_id]['Nome Completo'].values[0])
             telefone = st.text_input("Telefone", value=df[df['ID'] == record_id]['Telefone'].values[0])
             cpf = st.text_input("CPF", value=df[df['ID'] == record_id]['CPF'].values[0])
             rg = st.text_input("RG", value=df[df['ID'] == record_id]['RG'].values[0])
@@ -83,7 +83,7 @@ elif option == "Atualizar Registro":
 
             if st.button("Atualizar"):
                 df.loc[df['ID'] == record_id, 'Cidade'] = cidade
-                df.loc[df['ID'] == record_id, 'Nome'] = nome
+                df.loc[df['ID'] == record_id, 'Nome Completo'] = nome
                 df.loc[df['ID'] == record_id, 'Telefone'] = telefone
                 df.loc[df['ID'] == record_id, 'CPF'] = cpf
                 df.loc[df['ID'] == record_id, 'RG'] = rg
@@ -109,7 +109,7 @@ elif option == "Deletar Registro":
                 write_data(df)
                 st.success("Registro excluído com sucesso!")
                 st.experimental_rerun()
-            nome = st.text_input("Nome", value=df[df['ID'] == record_id]['Nome'].values[0])
+            nome = st.text_input("Nome Completo", value=df[df['ID'] == record_id]['Nome Completo'].values[0])
 
         else:
             st.error("ID não encontrado!")

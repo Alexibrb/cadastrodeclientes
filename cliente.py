@@ -27,7 +27,7 @@ with st.container():
     st.info("### 🆕Adicionar novo registro")
     with st.container():
         with st.form('cadastro', clear_on_submit=True):
-            cidade = st.selectbox("Cidade",('Condeúba', 'Pres. Jânio Quadros', 'Maetinga', 'Cordeiros', 'Piripá', 'Mortugaba'))
+            cidade = st.selectbox("Selecione a Cidade" ,('Condeúba', 'Pres. Jânio Quadros', 'Maetinga', 'Cordeiros', 'Piripá', 'Mortugaba'))
             nome = st.text_input("Nome Completo")
             telefone = st.text_input("Telefone")
             cpf = st.text_input("CPF")
