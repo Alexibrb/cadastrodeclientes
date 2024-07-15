@@ -6,15 +6,17 @@ import os
 st.set_page_config(page_title="Cadastro de Clientes", page_icon="💻", layout="wide", initial_sidebar_state="expanded")
 
 st.success("# Paulo Eiji Viana \n Engenheiro - CREABA 37645/D")
+@st.cache_data
 with open("style.css") as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 
  #Funções auxiliares
+@st.cache_data
 def read_data():
     return pd.read_excel('database.xlsx')
 
-
+@st.cache_data
 def write_data(df):
     df.to_excel('database.xlsx', index=False)
 
