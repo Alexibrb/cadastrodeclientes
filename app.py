@@ -4,7 +4,7 @@ import openpyxl
 
 st.set_page_config(page_title="Cadastro de Clintes", page_icon="💻", layout="wide", initial_sidebar_state="expanded")
 
-st.success("# Paulo Eiji Viana \n Engenheiro - CREABA 37645/D")
+
 with open("style.css") as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
@@ -20,6 +20,7 @@ def write_data(df):
 
 # Leitura dos dados
 df = read_data()
+st.table(df)
 st.markdown('# 💻 Cadastro de Clientes' )
 
 with st.container():
@@ -41,22 +42,22 @@ elif option == "Criar Dados":
         telefone = st.text_input("Telefone")
         cpf = st.text_input("CPF")
         rg = st.text_input("RG")
-        endereco_obra = st.text_input("Endereço da obra (Completo)")
-        endereco_residencial = st.text_input("Endereço Residencial (Completo)")
+        endereco_obra = st.text_input("Endereço da obra", placeholder="Digite o endereço completo")
+        endereco_residencial = st.text_input("Endereço Residencial", placeholder="Digite o endereço completo")
         obs = st.text_input("Observação")
 
     if st.button("Adicionar Registro", key='my_button'):
         new_id = df['ID'].max() + 1 if not df.empty else 1
         new_row = pd.DataFrame({
-                'ID': [new_id],
-                'Cidade': [cidade],
-                'Nome Completo': [nome],
-                'Telefone': [telefone],
-                'CPF': [cpf],
-                'RG': [rg],
-                'Endereço da obra (Completo)': [endereco_obra],
-                'Endereço Residencial (Completo)': [endereco_residencial],
-                'Observação': [obs]
+            'ID': [new_id],
+            'Cidade': [cidade],
+            'Nome Completo': [nome],
+            'Telefone': [telefone],
+            'CPF': [cpf],
+            'RG': [rg],
+            'Endereço da obra': [endereco_obra],
+            'Endereço Residencial': [endereco_residencial],
+            'Observação': [obs]
         })
         df = pd.concat([df, new_row], ignore_index=True)
         write_data(df)
