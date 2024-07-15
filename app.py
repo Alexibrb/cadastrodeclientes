@@ -10,25 +10,17 @@ with open("style.css") as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 
-# Funções auxiliares
-#def read_data():
-    #return pd.read_excel('database.xlsx')
+ #Funções auxiliares
+def read_data():
+    return pd.read_excel('database.xlsx')
 
-def load_data(file_path):
-    if os.path.exists(file_path):
-        data = pd.read_excel(file_path)
-    else:
-        data = pd.DataFrame(columns=['ID', 'Cidade', 'Nome Completo', 'Telefone', 'CPF', 'RG', 'Endereço da obra', 'Endereço Residencial', 'Observação'])
-    return data
 
-file_path = 'database.xlsx'
-df = load_data(file_path)
 def write_data(df):
     df.to_excel('database.xlsx', index=False)
 
 
 # Leitura dos dados
-#df = read_data()
+df = read_data()
 
 st.markdown('# 💻 Cadastro de Clientes' )
 
