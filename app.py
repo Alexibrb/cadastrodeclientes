@@ -1,8 +1,9 @@
 import streamlit as st
 import pandas as pd
 import openpyxl
+import os
 
-st.set_page_config(page_title="Cadastro de Clintes", page_icon="💻", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="Cadastro de Clientes", page_icon="💻", layout="wide", initial_sidebar_state="expanded")
 
 
 with open("style.css") as f:
@@ -10,17 +11,25 @@ with open("style.css") as f:
 
 
 # Funções auxiliares
-def read_data():
-    return pd.read_excel('database.xlsx')
+#def read_data():
+    #return pd.read_excel('database.xlsx')
 
+def load_data(file_path):
+    if os.path.exists(file_path):
+        data = pd.read_excel(file_path)
+    else:
+        data = pd.DataFrame(columns=['ID', 'Cidade', 'Nome Completo', 'Telefone', 'CPF', 'RG', 'Endereço da obra', 'Endereço Residencial', 'Observação'])
+    return data
 
+file_path = 'database.xlsx'
+df = load_data(file_path)
 def write_data(df):
     df.to_excel('database.xlsx', index=False)
 
 
 # Leitura dos dados
-df = read_data()
-st.table(df)
+#df = read_data()
+
 st.markdown('# 💻 Cadastro de Clientes' )
 
 with st.container():
@@ -33,6 +42,7 @@ if option == "Ler os Dados":
         # Exibir a tabela com estilo CSS inline
         df_reset = df.reset_index(drop=True)
         st.table(df_reset)
+        st.table(df)
 
 elif option == "Criar Dados":
     st.info("### 🆕Adicionar novo registro")
