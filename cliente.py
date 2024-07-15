@@ -20,11 +20,11 @@ def write_data(df):
 
 # Leitura dos dados
 df = read_data()
-st.markdown('# 💻 Cadastro de Clientes' )
+st.markdown('## 💻 Cadastro de Clientes' )
 
 with st.container():
 
-    st.info("### 🆕Adicionar novo registro")
+    st.info("🆕Preencha os campos abaixo")
     with st.container():
         with st.form('cadastro', clear_on_submit=True):
             cidade = st.selectbox("Cidade", ('Condeúba','Pres. Jânio Quadros','Maetinga', 'Cordeiros', 'Piripá', 'Mortugaba'))
